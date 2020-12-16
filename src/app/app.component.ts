@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   constructor() {
+    this.query = ''
     this.artists = [
       {
         "name" : "Barot Bellingham",
