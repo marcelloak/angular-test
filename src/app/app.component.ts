@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { Component } from '@angular/core';
     `
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   query: string;
   artists: object;
 
@@ -22,21 +23,13 @@ export class AppComponent {
     item.highlight = !item.highlight;
   }
 
-  constructor() {
+  constructor( private http: HttpClient ) {
     this.query = ''
-    this.artists = [
-      {
-        "name" : "Barot Bellingham",
-        "shortname": "Barot_Bellinham",
-        "reknown" : "Royal Academy",
-        "bio" : "Barot has just finished his final year"
-      },
-      {
-        "name" : "Hassum Harrod",
-        "shortname": "Hassum_Harrod",
-        "reknown" : "Art College",
-        "bio" : "Hassum has just finished his final year"
-      }
-    ]
+  }
+
+  ngOnInit(): void {
+    this.http.get<Object>('../assets/data.json').subscribe((data) => {
+      this.artists = data;
+    })
   }
 }
